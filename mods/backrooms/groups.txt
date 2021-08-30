@@ -1,0 +1,23 @@
+
+block groups:
+
+oddly_breakable_by_hand
+    self explanitory, nodes that can be broken by the hand
+requires_admin
+    requires the admin pick
+papery
+    stuff that should be cut through with anything sharp, sharpened glass shards are an example of something that can break these nodes
+requires_blunt
+    anything that should be hit by something blunt to be destroyed, examples include hammers and pipes
+choppy
+    axes and stuff, wood
+near_instant
+    like oddly_breakable_by_hand but really fast and stuff
+
+
+item groups:
+
+tape
+tape_piece
+sticky
+stick

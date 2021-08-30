@@ -1,0 +1,1 @@
+the door model is stolen from the door mod in minetest game or whatever
