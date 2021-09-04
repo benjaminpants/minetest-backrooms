@@ -24,7 +24,7 @@ backrooms.floordata[2] = {
 	floorheight = 1,
 	unbreakable_ceiling_block = "backrooms:reusable_ceiling",
 	unbreakable_floor_block = "backrooms:reusable_ceiling",
-	biome_tic = nil,
+	floor_tic = nil,
 	biomes = {
 		{ 
 			identifier = "debug",

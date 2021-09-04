@@ -84,15 +84,14 @@ local function reducesanity()
 	reduce_stat_sanity("sanity")
 end
 
-local function playersecond()
-	minetest.after(1,playersecond)
+local function playertic(time)
 	local players = minetest.get_connected_players()
     for _, player in pairs(players) do
 		local meta = player:get_meta()
 		local floor = meta:get_int("floor")
 		if (backrooms.floordata[floor] ~= nil) then
-			if (backrooms.floordata[floor].biome_tic ~= nil) then
-				backrooms.floordata[floor].biome_tic(player)
+			if (backrooms.floordata[floor].floor_tic ~= nil) then
+				backrooms.floordata[floor].floor_tic(player)
 			end
 		end
 	end
@@ -105,4 +104,4 @@ minetest.after(hungerdrain, reducehunger)
 
 minetest.after(sanitydrain, reducesanity)
 
-minetest.after(1,playersecond) --preferably this would be every server tick but i haven't figured that out yet
+minetest.register_globalstep(playertic)

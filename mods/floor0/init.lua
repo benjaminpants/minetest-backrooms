@@ -249,7 +249,7 @@ backrooms.add_floor({
 	floorheight = 1,
 	unbreakable_ceiling_block = "backrooms:reusable_ceiling",
 	unbreakable_floor_block = "backrooms:reusable_ceiling",
-	biome_tic = check_if_entry_to_floor_1,
+	floor_tic = check_if_entry_to_floor_1,
 	biomes = {
 		{ --base floor 0 biome
 			identifier = "base",
