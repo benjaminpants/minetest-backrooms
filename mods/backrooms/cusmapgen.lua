@@ -150,61 +150,66 @@ local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 local data = vm:get_data() 
 local area = VoxelArea:new{MinEdge=emin, MaxEdge=emax}
 
-for i in area:iter( minp.x, minp.y, minp.z, maxp.x, minp.y, maxp.z ) do 
-	if data[i] == c_air then
-		data[i] = c_replaceable 
-	end 
-end
-
-local wallgenk = selectedroom.biomes[biomechosen].wallgenx or 10
-
-local wallgeno = selectedroom.biomes[biomechosen].wallgenz or 39
-
-local wallgens = selectedroom.biomes[biomechosen].wallgens or 2
+if (selectedroom.biomes[biomechosen].biomegenonly ~= true) then
 
 
-for k=0, wallgenk, 1 do
-	if (not rng_percentage(selectedroom.biomes[biomechosen].walldiszchance)) then
-		for o=0, wallgeno, 1 do
-			createbiomewall(minp.x + (k * 8),minp.y + 1,minp.z + (o * wallgens),"z",wallgens,selectedroom.wallheight,area,data,selectedroom.biomes[biomechosen])
-		end
-	end
-	if (not rng_percentage(selectedroom.biomes[biomechosen].walldisxchance)) then
-		for o=0, wallgeno, 1 do
-			createbiomewall(minp.x + (o * wallgens),minp.y + 1,minp.z + (k * 8),"x",wallgens,selectedroom.wallheight,area,data,selectedroom.biomes[biomechosen])
-		end
-	end
-end
-
-for k=0, 10, 1 do
-	for o=0,10,1 do
-		if (rng_percentage(selectedroom.biomes[biomechosen].lightpercent)) then
-		createbox((minp.x + (k * 8) - 4) + selectedroom.biomes[biomechosen].lightplacement[1] + selectedroom.biomes[biomechosen].lightplacement[3], minp.y + selectedroom.wallheight + 1, minp.z + ((o * 8) - 4) + selectedroom.biomes[biomechosen].lightplacement[2],(minp.x + (k * 8) - 4) + selectedroom.biomes[biomechosen].lightplacement[1] + selectedroom.biomes[biomechosen].lightplacement[3], minp.y + selectedroom.wallheight + 1,minp.z + ((o * 8) - 4) + selectedroom.biomes[biomechosen].lightplacement[2] + selectedroom.biomes[biomechosen].lightplacement[4],area,data,minetest.get_content_id(chooseweight(selectedroom.biomes[biomechosen].light_blocks)))
-		end
-	end
-
-
-end
-
-
-for i in area:iter( minp.x, minp.y, minp.z, maxp.x, minp.y, maxp.z ) do 
-	if data[i] == c_replaceable then
-		data[i] = minetest.get_content_id(chooseweight(selectedroom.biomes[biomechosen].floor_blocks))
-	end 
-end
-
-if (selectedroom.has_ceiling) then
-	for i in area:iter( minp.x, minp.y + selectedroom.wallheight + 1, minp.z, maxp.x, minp.y + selectedroom.wallheight + 1, maxp.z ) do 
+	for i in area:iter( minp.x, minp.y, minp.z, maxp.x, minp.y, maxp.z ) do 
 		if data[i] == c_air then
-			data[i] = minetest.get_content_id(chooseweight(selectedroom.biomes[biomechosen].ceil_blocks))
+			data[i] = c_replaceable 
 		end 
 	end
-	
-	for i in area:iter( minp.x, minp.y + selectedroom.wallheight + 1, minp.z, maxp.x, minp.y + selectedroom.wallheight + 2, maxp.z ) do 
-		if data[i] == c_air then
-			data[i] = minetest.get_content_id(selectedroom.unbreakable_ceiling_block)
+
+	local wallgenk = selectedroom.biomes[biomechosen].wallgenx or 10
+
+	local wallgeno = selectedroom.biomes[biomechosen].wallgenz or 39
+
+	local wallgens = selectedroom.biomes[biomechosen].wallgens or 2
+
+
+	for k=0, wallgenk, 1 do
+		if (not rng_percentage(selectedroom.biomes[biomechosen].walldiszchance)) then
+			for o=0, wallgeno, 1 do
+				createbiomewall(minp.x + (k * 8),minp.y + 1,minp.z + (o * wallgens),"z",wallgens,selectedroom.wallheight,area,data,selectedroom.biomes[biomechosen])
+			end
+		end
+		if (not rng_percentage(selectedroom.biomes[biomechosen].walldisxchance)) then
+			for o=0, wallgeno, 1 do
+				createbiomewall(minp.x + (o * wallgens),minp.y + 1,minp.z + (k * 8),"x",wallgens,selectedroom.wallheight,area,data,selectedroom.biomes[biomechosen])
+			end
+		end
+	end
+
+	for k=0, 10, 1 do
+		for o=0,10,1 do
+			if (rng_percentage(selectedroom.biomes[biomechosen].lightpercent)) then
+			createbox((minp.x + (k * 8) - 4) + selectedroom.biomes[biomechosen].lightplacement[1] + selectedroom.biomes[biomechosen].lightplacement[3], minp.y + selectedroom.wallheight + 1, minp.z + ((o * 8) - 4) + selectedroom.biomes[biomechosen].lightplacement[2],(minp.x + (k * 8) - 4) + selectedroom.biomes[biomechosen].lightplacement[1] + selectedroom.biomes[biomechosen].lightplacement[3], minp.y + selectedroom.wallheight + 1,minp.z + ((o * 8) - 4) + selectedroom.biomes[biomechosen].lightplacement[2] + selectedroom.biomes[biomechosen].lightplacement[4],area,data,minetest.get_content_id(chooseweight(selectedroom.biomes[biomechosen].light_blocks)))
+			end
+		end
+
+
+	end
+
+
+	for i in area:iter( minp.x, minp.y, minp.z, maxp.x, minp.y, maxp.z ) do 
+		if data[i] == c_replaceable then
+			data[i] = minetest.get_content_id(chooseweight(selectedroom.biomes[biomechosen].floor_blocks))
 		end 
 	end
+
+	if (selectedroom.has_ceiling) then
+		for i in area:iter( minp.x, minp.y + selectedroom.wallheight + 1, minp.z, maxp.x, minp.y + selectedroom.wallheight + 1, maxp.z ) do 
+			if data[i] == c_air then
+				data[i] = minetest.get_content_id(chooseweight(selectedroom.biomes[biomechosen].ceil_blocks))
+			end 
+		end
+		
+		for i in area:iter( minp.x, minp.y + selectedroom.wallheight + 1, minp.z, maxp.x, minp.y + selectedroom.wallheight + 2, maxp.z ) do 
+			if data[i] == c_air then
+				data[i] = minetest.get_content_id(selectedroom.unbreakable_ceiling_block)
+			end 
+		end
+	end
+
 end
 
 local structures_to_place = nil

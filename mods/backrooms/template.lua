@@ -37,6 +37,7 @@ backrooms.floordata[2] = {
 			lightplacement = {-1,-1,2,1}, --offset x,offset z, size x, size z, starting from the center
 			decorationchance = 5,
 			decorations = {{decoration_template,100}},
+			biomegenonly = false, --should it just be the biome gen and not run the normal generation code? (DECORATIONS WILL STILL BE PLACED)
             biomegen = forcedec_template, --a forced generator that will be called lol
             --wallgenx is an option paramater you can put here, its very technical but can be used to adjust how big chunks are in each axis, default is 10
             --wallgenz is the same as above but for the z axis, the default is 39
