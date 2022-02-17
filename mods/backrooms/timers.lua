@@ -1,5 +1,5 @@
-local thirstdrain = 3
-local hungerdrain = 5
+local thirstdrain = 5
+local hungerdrain = 3
 local sanitydrain = 1
 
 
@@ -70,7 +70,7 @@ end
 
 
 local function reducethirst()
-    minetest.after(2, reducethirst)
+    minetest.after(thirstdrain, reducethirst)
 	reduce_stat("thirst")
 end
 
@@ -80,7 +80,7 @@ local function reducehunger()
 end
 
 local function reducesanity()
-    minetest.after(1, reducesanity)
+    minetest.after(sanitydrain, reducesanity)
 	reduce_stat_sanity("sanity")
 end
 

@@ -46,9 +46,9 @@ dofile(default_path .. "/timers.lua")
 
 dofile(default_path .. "/debug.lua") --only run this when testing
 
-hb.register_hudbar("br_thirst", 0xFFFFFF, "Thirst", { icon = "backrooms_icon_thrist.png", bgicon = "backrooms_bgicon_thrist.png", bar = "backrooms_bar_thirst.png"}, 100, 100, false)
+hb.register_hudbar("br_thirst", 0xFFFFFF, "Thirst", { icon = "backrooms_icon_thrist.png", bgicon = "backrooms_bgicon_thrist.png", bar = "backrooms_bar_thirst.png"}, 50, 50, false)
 
-hb.register_hudbar("br_hunger", 0xFFFFFF, "Hunger", { icon = "backrooms_icon_hunger.png", bgicon = "backrooms_bgicon_hunger.png", bar = "backrooms_bar_hunger.png"}, 50, 50, false)
+hb.register_hudbar("br_hunger", 0xFFFFFF, "Hunger", { icon = "backrooms_icon_hunger.png", bgicon = "backrooms_bgicon_hunger.png", bar = "backrooms_bar_hunger.png"}, 100, 100, false)
 
 hb.register_hudbar("br_sanity", 0xFFFFFF, "Sanity", { icon = "backrooms_icon_sanity.png", bgicon = "backrooms_bgicon_sanity.png", bar = "backrooms_bar_sanity.png"}, 100, 100, false)
 
@@ -56,24 +56,24 @@ minetest.register_on_newplayer(function(player)
 	local meta = player:get_meta()
 	meta:set_int("last_connected_ver",1)
 	meta:set_int("floor",backrooms.get_floor_id("Floor 0"))
-	meta:set_int("thirst",100)
-	meta:set_int("hunger",50)
+	meta:set_int("thirst",50)
+	meta:set_int("hunger",100)
 	meta:set_int("sanity",100)
 	backrooms.teleport_to_floor(player,"Floor 0")
 end)
 
 minetest.register_on_joinplayer(function(player)
 	local meta = player:get_meta()
-	hb.init_hudbar(player, "br_hunger", meta:get_int("hunger"), 50, false)
-	hb.init_hudbar(player, "br_thirst", meta:get_int("thirst"), 100, false)
+	hb.init_hudbar(player, "br_hunger", meta:get_int("hunger"), 100, false)
+	hb.init_hudbar(player, "br_thirst", meta:get_int("thirst"), 50, false)
 	hb.init_hudbar(player, "br_sanity", meta:get_int("sanity"), 100, false)
 end)
 
 minetest.register_on_dieplayer(function(player)
 	local meta = player:get_meta()
-	meta:set_int("thirst",100)
+	meta:set_int("thirst",50)
 	meta:set_int("floor",backrooms.get_floor_id("Floor 0"))
-	meta:set_int("hunger",50)
+	meta:set_int("hunger",100)
 	meta:set_int("sanity",100)
 	--minetest.chat_send_all(player:get_player_name() .. " died.")
 end)
