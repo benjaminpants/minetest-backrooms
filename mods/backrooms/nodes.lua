@@ -2,7 +2,7 @@ minetest.register_node("backrooms:reusable_ceiling", {
 description = "Invincible Ceiling",
 tiles = {"backrooms_ceil.png"},
 is_ground_content = true,
-groups = {wool=1,requires_admin=1},
+groups = {requires_admin=1},
 sounds = backrooms.node_sound_defaults()
 })
 
@@ -10,8 +10,26 @@ minetest.register_node("backrooms:endless_abyss", {
 	description = "Black Abyss",
 	tiles = {"backrooms_abyss.png"},
 	is_ground_content = true,
-	groups = {wool=1,requires_admin=1},
+	groups = {requires_admin=1},
 	sounds = backrooms.node_sound_defaults()
+})
+
+minetest.register_node("backrooms:interdim_trapdoor", {
+	description = "Interdimensional Trapdoor",
+	tiles = {"(backrooms_fabric_of_reality.png)^(backrooms_wooden_trapdoor.png)"},
+	is_ground_content = true,
+	groups = {requires_admin=1},
+	sounds = backrooms.node_sound_defaults(),
+	on_rightclick = function(pos,node,player,itemstack)
+		minetest.chat_send_player(player:get_player_name(),node.param2)
+		if (node.param2 == 0) then
+			node.param2 = 1
+		end
+		local floor_id = node.param2
+		local meta = player:get_meta()
+		meta:set_int("floor",floor_id)
+		backrooms.teleport_to_floor(player,backrooms.floordata[floor_id].name)
+	end
 })
 
 colors.foreach(function(color)

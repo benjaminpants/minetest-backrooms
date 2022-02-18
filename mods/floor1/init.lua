@@ -103,6 +103,18 @@ local decoration_crate = function(biome,position,area,data,seed)
 
 end
 
+local trap_door_decoration = function(biome,position,area,data,seed)
+	math.randomseed(seed)
+	local distance_from_center = vector.length(vector.new(position.x,0,position.z))
+	local new_pos = vector.new(position.x,position.y - 1,position.z)
+	if (math.random(1,5) == 1) then
+		local floor_second_id = backrooms.get_floor_id("Floor 2")
+		minetest.set_node(new_pos,{name="backrooms:interdim_trapdoor",param2 = floor_second_id})
+	end
+	
+
+end
+
 
 
 
@@ -125,7 +137,7 @@ backrooms.add_floor({
 			lightpercent = 80,
 			lightplacement = {0,0,0,0}, --offset x,offset z, size x, size z, starting from the center
 			decorationchance = 1,
-			decorations = {{decoration_crate,100}},
+			decorations = {{decoration_crate,100},{trap_door_decoration,5}},
             biomegen = nil, --a forced generator that will be called lol
             wallgenx = 10,
             wallgenz = 10,

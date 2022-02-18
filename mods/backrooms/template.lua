@@ -24,6 +24,7 @@ backrooms.floordata[2] = {
 	floorheight = 1,
 	unbreakable_ceiling_block = "backrooms:reusable_ceiling",
 	unbreakable_floor_block = "backrooms:reusable_ceiling",
+	floor_teleport = nil, --nil defaults to the default teleporation code
 	floor_tic = nil,
 	biomes = {
 		{ 

@@ -1,4 +1,5 @@
 local c_air = minetest.get_content_id("air")
+local c_reusable_ceil = minetest.get_content_id("backrooms:reusable_ceiling")
 
 
 minetest.register_node("floor2:concrete_floor", {
@@ -20,7 +21,7 @@ minetest.register_node("floor2:concrete_wall", {
 minetest.register_node("floor2:wire_ceil", { --tbh i have no idea what the ceiling is supposed to be-
     description = "Wire Collection",
     tiles = {"floor2_wire_bundle.png"},
-	drops = "backrooms:wires 3",
+	drop = "backrooms:wires 3",
     is_ground_content = false,
     groups = {papery=1,requires_admin=1},
     sounds = backrooms.node_sound_defaults()
@@ -46,11 +47,17 @@ minetest.register_node("floor2:wall_light", { --the light being flat is a placeh
     sounds = backrooms.node_sound_defaults()
 })
 
+local add_light = function(tab,biome,minp,maxp,area,data,seed,z_offset)
+	table.insert(tab,{vector.new(minp.x - 44,minp.y + 2, minp.z + z_offset), minetest.get_modpath("floor2") .. "/schematics/just_a_light.mts", "0", nil, true})
+
+end
+
 
 local hall_gen = function(biome,minp,maxp,area,data,seed)
     local cached_floor = minetest.get_content_id(biome.floor_blocks[1][1])
     local cached_wall = minetest.get_content_id(biome.wall_blocks[1][1])
     local cached_ceiling = minetest.get_content_id(biome.ceil_blocks[1][1])
+	math.randomseed(seed)
     for i in area:iter( minp.x, minp.y, minp.z, maxp.x, minp.y, maxp.z ) do 
 		if data[i] == c_air then
 			data[i] = cached_floor
@@ -74,8 +81,25 @@ local hall_gen = function(biome,minp,maxp,area,data,seed)
 		end 
 	end
 
-	minetest.place_node(vector.new(minp.x - 44,minp.y + 3, minp.z), {name="floor2:wall_light", param2=3})
-	--return values are structures
+	for i in area:iter( minp.x, minp.y + 4, minp.z, maxp.x, minp.y + 4, maxp.z ) do 
+		data[i] = c_reusable_ceil
+	end
+
+	--minetest.place_node(vector.new(minp.x - 44,minp.y + 3, minp.z), {name="floor2:wall_light", param2=3})
+	local all_lights = {}
+
+	for i=1, 10 do
+		if (math.random(1,2) == 2) then
+			add_light(all_lights,biome,minp,maxp,area,data,seed,i * 8)
+		end
+	end
+
+	return all_lights
+end
+
+local teleport_two_specific = function(player,floorname, fx, fz)
+	local floor_id = backrooms.get_floor_id(floorname)
+	player:set_pos({x = 5, y = backrooms.get_floor_y(floor_id) + 0.5, z = fz or math.random(-8000,8000)})
 end
 
 
@@ -85,6 +109,7 @@ backrooms.add_floor({ --floor 2 doesn't use the default terrain generation code
 	wallheight = 2,
 	has_ceiling = true,
 	floorheight = 1,
+	floor_teleport = teleport_two_specific,
 	unbreakable_ceiling_block = "backrooms:reusable_ceiling",
 	unbreakable_floor_block = "backrooms:reusable_ceiling",
 	floor_tic = nil,

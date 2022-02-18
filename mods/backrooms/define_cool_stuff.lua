@@ -6,7 +6,14 @@ backrooms.add_crate_table = function(ident, weightedlist)
 end
 
 backrooms.teleport_to_floor = function(player,floorname, fx, fz)
-	player:set_pos({x = fx or math.random(-8000,8000), y = backrooms.get_floor_y(backrooms.get_floor_id(floorname)) + 1, z = fz or math.random(-8000,8000)})
+	local floor_id = backrooms.get_floor_id(floorname)
+	if (backrooms.floordata[floor_id] ~= nil) then
+		if (backrooms.floordata[floor_id].floor_teleport ~= nil) then
+			backrooms.floordata[floor_id].floor_teleport(player, floorname, fx, fz)
+		else
+			player:set_pos({x = fx or math.random(-8000,8000), y = backrooms.get_floor_y(floor_id) + 1, z = fz or math.random(-8000,8000)})
+		end
+	end
 end
 
 
