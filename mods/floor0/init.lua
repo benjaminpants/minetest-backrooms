@@ -44,7 +44,7 @@ tiles = {"floor0_carpet.png^floor0_moisture.png","floor0_carpet.png","floor0_car
 is_ground_content = true,
 on_rightclick = function(pos,node,player,itemstack)
 	minetest.set_node(pos, {name="floor0:carpet"})
-	backrooms.change_player_stat(player,"thirst",100,6)
+	backrooms.change_player_stat(player,"thirst",50,6)
 	backrooms.change_player_stat(player,"sanity",100,-7)
 end,
 groups = {wool=1,requires_admin=1},
@@ -152,10 +152,10 @@ minetest.register_craftitem("floor0:moss", {
     description = "Moss",
     inventory_image = "floor0_moss_item.png",
 	on_use = function(itemstack, player, pointed_thing)
-		if (backrooms.change_player_stat(player,"hunger",50,3)) then
+		if (backrooms.change_player_stat(player,"hunger",100,3)) then
 			itemstack:take_item(1)
 		end
-		backrooms.change_player_stat(player,"sanity",100,-2)
+		backrooms.change_player_stat(player,"sanity",50,-2)
 		return itemstack
 	end
 })

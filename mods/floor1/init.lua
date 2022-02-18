@@ -75,7 +75,7 @@ minetest.register_node("floor1:stone_floor_stone", {
 	is_ground_content = true,
 	on_rightclick = function(pos,node,player,itemstack)
 		minetest.set_node(pos, {name="floor1:stone_floor"})
-		backrooms.change_player_stat(player,"thirst",100,1)
+		backrooms.change_player_stat(player,"thirst",50,1)
 		backrooms.change_player_stat(player,"sanity",100,-2)
 	end,
 	groups = {stone=1,requires_admin=1},

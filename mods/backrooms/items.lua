@@ -24,6 +24,11 @@ minetest.register_craftitem("backrooms:stone", {
     inventory_image = "backrooms_stone.png"
 })
 
+minetest.register_craftitem("backrooms:wires", {
+    description = "Wires",
+    inventory_image = "backrooms_wires.png"
+})
+
 minetest.register_craft({
 	output = "backrooms:stick 2",
 	type = "shapeless",
@@ -36,7 +41,7 @@ minetest.register_craftitem("backrooms:almond_water", {
     description = "Almond Water",
     inventory_image = "backrooms_almond_water.png",
 	on_use = function(itemstack, player, pointed_thing)
-		if (backrooms.change_player_stat(player,"thirst",100,10)) then
+		if (backrooms.change_player_stat(player,"thirst",50,10)) then
 			itemstack:take_item(1)
 			local stack = ItemStack("backrooms:empty_bottle")
 			player:get_inventory():add_item("main",stack)
@@ -49,7 +54,7 @@ minetest.register_craftitem("backrooms:questionable_water", {
     description = "Questionable Water\nHm, this water... is questionable.",
     inventory_image = "backrooms_questionable_bottle.png",
 	on_use = function(itemstack, player, pointed_thing)
-		if (backrooms.change_player_stat(player,"thirst",100,6)) then
+		if (backrooms.change_player_stat(player,"thirst",50,6)) then
 			backrooms.change_player_stat(player,"sanity",100,-5)
 			itemstack:take_item(1)
 			local stack = ItemStack("backrooms:empty_bottle")
@@ -63,7 +68,7 @@ minetest.register_craftitem("backrooms:crisps", {
     description = "\"Crisps\"\nAn odd bag of chips with no special properties.",
     inventory_image = "backrooms_crisps.png",
 	on_use = function(itemstack, player, pointed_thing)
-		if (backrooms.change_player_stat(player,"hunger",50,6)) then
+		if (backrooms.change_player_stat(player,"hunger",100,6)) then
 			itemstack:take_item(1)
 		end
 		return itemstack

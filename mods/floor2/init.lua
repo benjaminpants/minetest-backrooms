@@ -20,12 +20,13 @@ minetest.register_node("floor2:concrete_wall", {
 minetest.register_node("floor2:wire_ceil", { --tbh i have no idea what the ceiling is supposed to be-
     description = "Wire Collection",
     tiles = {"floor2_wire_bundle.png"},
+	drops = "backrooms:wires 3",
     is_ground_content = false,
     groups = {papery=1,requires_admin=1},
     sounds = backrooms.node_sound_defaults()
 })
 
-minetest.register_node("floor2:wall_light", {
+minetest.register_node("floor2:wall_light", { --the light being flat is a placeholder
     description = "Wall Light",
     drawtype = "signlike",
     paramtype = "light",
@@ -61,7 +62,7 @@ local hall_gen = function(biome,minp,maxp,area,data,seed)
 		end 
 	end
 
-    for i in area:iter( maxp.x - 43, minp.y + 1, minp.z, maxp.x - 43, minp.y + 2, maxp.z ) do 
+    for i in area:iter( maxp.x - 44, minp.y + 1, minp.z, maxp.x - 44, minp.y + 2, maxp.z ) do 
 		if data[i] == c_air then
 			data[i] = cached_wall
 		end 
@@ -72,6 +73,8 @@ local hall_gen = function(biome,minp,maxp,area,data,seed)
 			data[i] = cached_ceiling
 		end 
 	end
+
+	minetest.place_node(vector.new(minp.x - 44,minp.y + 3, minp.z), {name="floor2:wall_light", param2=3})
 	--return values are structures
 end
 

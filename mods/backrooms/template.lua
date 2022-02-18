@@ -2,7 +2,7 @@
 
 --this is a "decoration", it's called occasionally when building a biome if enabled and can be whatever you want, like crates or tables
 local decoration_template = function(biome,position,area,data,seed)
-	--do setblock and stuff here, data is just for checking for air
+	--do setnode and stuff here, data is just for checking for air
 
 
 end

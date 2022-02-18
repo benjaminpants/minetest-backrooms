@@ -52,10 +52,10 @@ local function reduce_stat_sanity(stat)
 			return
 		end
 		local value = 1
-		local pos = {x = math.floor(player:get_pos().x), y = math.floor(player:get_pos().y) - 1, z = math.floor(player:get_pos().z)}
+		local pos = {x = math.round(player:get_pos().x), y = math.round(player:get_pos().y + 1), z = math.round(player:get_pos().z)}
 		local light = minetest.get_node_light(pos)
 		if (light == nil) then return end
-		if (light == 0 and false) then
+		if (light == 0) then
 			value = -1
 		end
 		if ((statstate + value) > 100) then
