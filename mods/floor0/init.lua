@@ -43,9 +43,16 @@ description = "Moist Brown Carpet",
 tiles = {"floor0_carpet.png^floor0_moisture.png","floor0_carpet.png","floor0_carpet.png","floor0_carpet.png","floor0_carpet.png","floor0_carpet.png"},
 is_ground_content = true,
 on_rightclick = function(pos,node,player,itemstack)
-	minetest.set_node(pos, {name="floor0:carpet"})
-	backrooms.change_player_stat(player,"thirst",50,6)
-	backrooms.change_player_stat(player,"sanity",100,-7)
+	if (itemstack:get_name() == "") then
+		minetest.set_node(pos, {name="floor0:carpet"})
+		backrooms.change_player_stat(player,"thirst",50,6)
+		backrooms.change_player_stat(player,"sanity",100,-7)
+	elseif (itemstack:get_name() == "floor0:mossy_bottle") then
+		minetest.set_node(pos, {name="floor0:carpet"})
+		itemstack:take_item(1)
+		local stack = ItemStack("floor0:mossy_bottle_full")
+		player:get_inventory():add_item("main",stack)
+	end
 end,
 groups = {wool=1,requires_admin=1},
 sounds = backrooms.node_sound_wet_carpet_defaults()
@@ -155,10 +162,30 @@ minetest.register_craftitem("floor0:moss", {
 		if (backrooms.change_player_stat(player,"hunger",100,3)) then
 			itemstack:take_item(1)
 		end
-		backrooms.change_player_stat(player,"sanity",50,-2)
+		backrooms.change_player_stat(player,"sanity",100,-2)
 		return itemstack
 	end
 })
+
+minetest.register_craftitem("floor0:mossy_bottle", {
+    description = "Makeshift Empty Moss Bottle",
+    inventory_image = "floor0_moss_bottle_empty.png"
+})
+
+minetest.register_craftitem("floor0:mossy_bottle_full", {
+    description = "Makeshift Moss Bottle",
+    inventory_image = "floor0_moss_bottle.png",
+	on_use = function(itemstack, player, pointed_thing)
+		if (backrooms.change_player_stat(player,"thirst",50,4)) then
+			itemstack:take_item(1)
+		end
+		local stack = ItemStack("floor0:mossy_bottle")
+		player:get_inventory():add_item("main",stack)
+		backrooms.change_player_stat(player,"sanity",100,-4)
+		return itemstack
+	end
+})
+
 
 
 --recipes
@@ -169,6 +196,15 @@ minetest.register_craft({
 		{"floor0:carpet_fabric", "floor0:carpet_fabric", "floor0:carpet_fabric"},
 		{"floor0:carpet_fabric", "floor0:carpet_fabric", "floor0:carpet_fabric"},
 		{"floor0:carpet_fabric", "floor0:carpet_fabric", "floor0:carpet_fabric"},
+	}
+})
+
+minetest.register_craft({
+	output = "floor0:mossy_bottle 1",
+	recipe = {
+		{"backrooms:glass_shard", "", "backrooms:glass_shard"},
+		{"backrooms:glass_shard", "", "backrooms:glass_shard"},
+		{"floor0:moss", "backrooms:glass_shard", "floor0:moss"},
 	}
 })
 
