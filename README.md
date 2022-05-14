@@ -1,3 +1,9 @@
+
+# DEPRECATION NOTICE
+This version of the backrooms(soon to be renamed blockrooms) is deprecated! Its the original old project with messy code and really hard to add new content to.
+This is the NEW repo: https://github.com/benjaminpants/blockrooms
+
+
 # Backrooms
 ## _A Voxel Game based off of the Backrooms_
 
